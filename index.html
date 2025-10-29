@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPAKULA_THARUN_PORTFOLIO</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            /* Dark background */
+            color: #c9d1d9;
+            /* Light text */
+        }
+
+        /* Custom scrollbar for aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1f2a36;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d1117;
+        }
+
+        /* Smooth scrolling behavior */
+        .html {
+            scroll-behavior: smooth;
+        }
+
+        .section-padding {
+            padding: 4rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .section-padding {
+                padding: 6rem 4rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Firebase Setup (Required Structure for Canvas Environment) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the Canvas environment
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        if (Object.keys(firebaseConfig).length > 0) {
+            try {
+                const app = initializeApp(firebaseConfig);
+                const db = getFirestore(app);
+                const auth = getAuth(app);
+
+                // Authenticate user
+                (async () => {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                    console.log("Firebase authentication successful.");
+                })();
+
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+            }
+        } else {
+            console.warn("Firebase configuration not available. Running as static page.");
+        }
+    </script>
+    <!-- End Firebase Setup -->
+
+
+    <!-- Fixed Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-sm shadow-lg border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#home"
+                    class="text-xl font-bold text-teal-400 rounded-lg transition-colors hover:text-teal-300">NAMASKARAM
+                    !!</a>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#summary"
+                        class="text-gray-300 hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Summary</a>
+                    <a href="#skills"
+                        class="text-gray-300 hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Skills</a>
+                    <a href="#projects"
+                        class="text-gray-300 hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Projects</a>
+                    <a href="#media"
+                        class="text-gray-300 hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Media</a>
+                    <!-- NEW: Link to Personal Info -->
+                    <a href="#personal-info"
+                        class="text-gray-300 hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Personal
+                        Info</a>
+                    <a href="#education"
+                        class="text-gray-300 hover:text-teal-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Education</a>
+                </nav>
+                <button id="mobile-menu-button"
+                    class="md:hidden p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    aria-expanded="false">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#summary"
+                    class="text-gray-300 hover:text-teal-400 block px-3 py-2 rounded-md text-base font-medium transition-colors">Summary</a>
+                <a href="#skills"
+                    class="text-gray-300 hover:text-teal-400 block px-3 py-2 rounded-md text-base font-medium transition-colors">Skills</a>
+                <a href="#projects"
+                    class="text-gray-300 hover:text-teal-400 block px-3 py-2 rounded-md text-base font-medium transition-colors">Projects</a>
+                <a href="#media"
+                    class="text-gray-300 hover:text-teal-400 block px-3 py-2 rounded-md text-base font-medium transition-colors">Media</a>
+                <!-- NEW: Link to Personal Info -->
+                <a href="#personal-info"
+                    class="text-gray-300 hover:text-teal-400 block px-3 py-2 rounded-md text-base font-medium transition-colors">Personal
+                    Info</a>
+                <a href="#education"
+                    class="text-gray-300 hover:text-teal-400 block px-3 py-2 rounded-md text-base font-medium transition-colors">Education</a>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="max-w-7xl mx-auto">
+
+        <!-- 1. HOME/HEADER SECTION (With Image Space) -->
+        <section id="home"
+            class="section-padding pt-24 min-h-screen flex items-center bg-gray-900 border-b border-gray-800">
+            <div class="grid md:grid-cols-3 gap-12 items-center">
+
+                <!-- Content Column -->
+                <div class="md:col-span-2 order-2 md:order-1">
+                    <p class="text-teal-400 text-lg mb-2 font-medium tracking-wider">Hello, I'm</p>
+                    <h1 class="text-6xl sm:text-7xl lg:text-8xl font-extrabold text-white mb-4 leading-tight">
+                        REPAKULA <br class="hidden sm:inline-block" />THARUN
+                    </h1>
+                    <p class="text-2xl font-light text-gray-300 mb-8">
+                        Master Of Computer Applications & <span class="text-yellow-400 font-semibold">Software
+                            Developer</span>
+                    </p>
+
+                    <!-- Contact Links -->
+                    <div class="flex flex-wrap gap-4 text-sm font-medium">
+                        <!-- MOBILE NUMBER ADDED HERE -->
+                        <a href="tel:+9199897749879"
+                            class="flex items-center space-x-2 text-gray-300 hover:text-white bg-gray-800 hover:bg-teal-600 px-4 py-2 rounded-full transition-all duration-300 shadow-md">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            <span>+91 99897749879</span>
+                        </a>
+                        <a href="mailto:reparthun.mca@gmail.com"
+                            class="flex items-center space-x-2 text-gray-300 hover:text-white bg-gray-800 hover:bg-teal-600 px-4 py-2 rounded-full transition-all duration-300 shadow-md">
+                            <i data-lucide="mail" class="w-4 h-4"></i>
+                            <span>Email</span>
+                        </a>
+                        <a href="https://github.com/repakulatharun" target="_blank" rel="noopener noreferrer"
+                            class="flex items-center space-x-2 text-gray-300 hover:text-white bg-gray-800 hover:bg-teal-600 px-4 py-2 rounded-full transition-all duration-300 shadow-md">
+                            <i data-lucide="github" class="w-4 h-4"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/repakula-tharun" target="_blank" rel="noopener noreferrer"
+                            class="flex items-center space-x-2 text-gray-300 hover:text-white bg-gray-800 hover:bg-teal-600 px-4 py-2 rounded-full transition-all duration-300 shadow-md">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Profile Image Space (Order 1 for mobile, Order 2 for desktop) -->
+                <div class="md:col-span-1 flex justify-center order-1 md:order-2">
+                    <div
+                        class="relative w-64 h-64 sm:w-80 sm:h-80 bg-gray-800 p-1 rounded-full shadow-2xl shadow-teal-500/30 ring-4 ring-teal-500/50">
+                        <!-- Placeholder for your Professional Image -->
+                        <img src="Tharun_proff_pic.png" alt="REPAKULA THARUN Profile Picture"
+                            class="w-full h-full object-cover rounded-full"
+                            onerror="this.onerror=null; this.src='https://placehold.co/320x320/0d1117/c9d1d9?text=Your+Image+Here';" />
+                        <div
+                            class="absolute inset-0 rounded-full border-4 border-transparent hover:border-teal-400 transition-all duration-500 pointer-events-none">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 2. SUMMARY SECTION -->
+        <section id="summary" class="section-padding border-b border-gray-800 bg-gray-900">
+            <h2 class="text-4xl font-bold mb-8 text-teal-400 flex items-center"><i data-lucide="clipboard-list"
+                    class="w-8 h-8 mr-3"></i> Professional Summary</h2>
+            <div class="bg-gray-800 p-8 rounded-xl shadow-xl hover:shadow-teal-500/20 transition-shadow duration-500">
+                <p class="text-lg leading-relaxed text-gray-300">
+                    I am a highly **motivated and results-driven MCA graduate** with a strong foundation and keen
+                    enthusiasm in full-stack web development, specializing in the **MERN stack** (MongoDB, Express.js,
+                    React.js, Node.js). Proficient in building responsive user interfaces, developing robust RESTful
+                    APIs, and managing SQL and NoSQL databases. Eager to leverage strong problem-solving skills and
+                    hands-on project experience to contribute to innovative web application development and thriving in
+                    collaborative and dynamic environments. I am interested in contributing innovative solutions to
+                    drive project success.
+                </p>
+            </div>
+        </section>
+
+        <!-- 3. SKILLS SECTION -->
+        <section id="skills" class="section-padding border-b border-gray-800 bg-gray-900">
+            <h2 class="text-4xl font-bold mb-8 text-teal-400 flex items-center"><i data-lucide="code"
+                    class="w-8 h-8 mr-3"></i> Technical Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Skill Card: Front-End -->
+                <div
+                    class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-teal-500 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-white mb-3 flex items-center"><i data-lucide="layout-grid"
+                            class="w-5 h-5 mr-2 text-red-400"></i> Front-End</h3>
+                    <ul class="space-y-2 text-gray-300 list-disc list-inside">
+                        <li>React.js</li>
+                        <li>HTML, CSS, JavaScript</li>
+                    </ul>
+                </div>
+
+                <!-- Skill Card: Back-End -->
+                <div
+                    class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-teal-500 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-white mb-3 flex items-center"><i data-lucide="server"
+                            class="w-5 h-5 mr-2 text-blue-400"></i> Back-End</h3>
+                    <ul class="space-y-2 text-gray-300 list-disc list-inside">
+                        <li>Node.js</li>
+                        <li>Express.js</li>
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </div>
+
+                <!-- Skill Card: Core & DB -->
+                <div
+                    class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-teal-500 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-white mb-3 flex items-center"><i data-lucide="database"
+                            class="w-5 h-5 mr-2 text-green-400"></i> Databases & Core</h3>
+                    <ul class="space-y-2 text-gray-300 list-disc list-inside">
+                        <li>MySQL</li>
+                        <li>SQLite</li>
+                        <li>MongoDB</li>
+                    </ul>
+                </div>
+
+                <!-- Skill Card: Tools -->
+                <div
+                    class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-teal-500 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-white mb-3 flex items-center"><i data-lucide="tool"
+                            class="w-5 h-5 mr-2 text-yellow-400"></i> Tools & VCS</h3>
+                    <ul class="space-y-2 text-gray-300 list-disc list-inside">
+                        <li>GitHub</li>
+                        <li>VS Code</li>
+                        <li>Eclipse</li>
+                        <li>Docker</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. PROJECTS SECTION -->
+        <section id="projects" class="section-padding border-b border-gray-800 bg-gray-900">
+            <h2 class="text-4xl font-bold mb-10 text-teal-400 flex items-center"><i data-lucide="laptop-2"
+                    class="w-8 h-8 mr-3"></i> Key Projects</h2>
+
+            <!-- Project 1 -->
+            <div class="bg-gray-800 p-6 sm:p-8 rounded-xl mb-8 shadow-xl border-l-4 border-teal-500">
+                <h3 class="text-2xl font-bold text-white mb-2">Real-Time Collaborative Code Editor with Code Playback
+                    and Time Travel</h3>
+                <p class="text-sm text-gray-400 mb-4 font-mono">Tools: React.js, HTML, CSS, Node.js, WebSockets, Docker,
+                    CodeMirror</p>
+                <ul class="list-disc list-outside ml-5 space-y-3 text-gray-300">
+                    <li>Developed a cutting-edge real-time collaborative code editor utilizing the MERN stack, enabling
+                        multiple users to edit Code document concurrently with instant synchronization.</li>
+                    <li>The frontend, built with **React.js**, integrates Monaco Editor for a rich coding experience.
+                    </li>
+                    <li>The backend leverages **Node.js and Express.js** to power a high-performance **Socket.IO**
+                        WebSocket server for bidirectional communication and conflict resolution.</li>
+                </ul>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-xl border-l-4 border-teal-500">
+                <h3 class="text-2xl font-bold text-white mb-2">Real-Time Chatting Application</h3>
+                <p class="text-sm text-gray-400 mb-4 font-mono">Tools: React.js, Node.js, WebSockets</p>
+                <ul class="list-disc list-outside ml-5 space-y-3 text-gray-300">
+                    <li>A chatting Interface is a digital platform that enables **real-time communication** between
+                        users.</li>
+                    <li>Features include a crucial **scheduling messages** feature for delayed sending.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. MEDIA GALLERY SECTION (Space for Pictures and Videos) -->
+        <section id="media" class="section-padding border-b border-gray-800 bg-gray-900">
+            <h2 class="text-4xl font-bold mb-10 text-teal-400 flex items-center"><i data-lucide="gallery-thumbnails"
+                    class="w-8 h-8 mr-3"></i> Project Media Gallery</h2>
+            <p class="text-lg text-gray-400 mb-8">This space is designed to showcase pictures and videos related to my
+                projects. Click on the placeholders below to see the responsive layout.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                <!-- Placeholder for Video 1 -->
+                <div class="bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-700">
+                    <h3 class="text-xl font-semibold text-white mb-3">Video Demo: Collaborative Code Editor</h3>
+                    <div
+                        class="aspect-video bg-gray-700 rounded-lg flex items-center justify-center text-center text-gray-400 text-sm p-4">
+                        <!-- Replace with your actual iframe/video tag for media demonstration -->
+                        <div class="p-6">
+                            <i data-lucide="videoooooo" class="w-12 h-12 mx-auto mb-2"></i>
+                            <p>Video Placeholder (e.g., YouTube Embed or HTML5 Video)</p>
+                            <p class="mt-2 text-xs text-teal-400">Insert your `&lt;iframe&gt;` or `&lt;video&gt;` tag
+                                here.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Placeholder for Image Gallery -->
+                <div class="bg-gray-800 p-4 rounded-xl shadow-lg border border-gray-700">
+                    <h3 class="text-xl font-semibold text-white mb-3">Image Gallery: Chat Application Screenshots</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <!-- Image Placeholder 1 -->
+                        <div
+                            class="w-full aspect-square bg-gray-700 rounded-lg flex items-center justify-center text-center text-gray-400 text-xs">
+                            <i data-lucide="image" class="w-6 h-6"></i>
+                        </div>
+                        <!-- Image Placeholder 2 -->
+                        <div
+                            class="w-full aspect-square bg-gray-700 rounded-lg flex items-center justify-center text-center text-gray-400 text-xs">
+                            <i data-lucide="image" class="w-6 h-6"></i>
+                        </div>
+                        <!-- Image Placeholder 3 -->
+                        <div
+                            class="w-full aspect-square bg-gray-700 rounded-lg flex items-center justify-center text-center text-gray-400 text-xs">
+                            <i data-lucide="image" class="w-6 h-6"></i>
+                        </div>
+                        <!-- Text Note -->
+                        <div class="col-span-3 text-center mt-2 text-sm text-gray-400">
+                            <p>This is a responsive 3-column grid for project screenshots or related images.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+
+
+
+        <!-- 7. EDUCATION & EXTRACURRICULAR SECTION (Now Section 7) -->
+        <section id="education" class="section-padding bg-gray-900">
+            <h2 class="text-4xl font-bold mb-10 text-teal-400 flex items-center"><i data-lucide="graduation-cap"
+                    class="w-8 h-8 mr-3"></i> Education & Activities</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+
+                <!-- Education -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-5 border-b border-gray-700 pb-2">Academic
+                        Qualifications</h3>
+
+                    <!-- MCA -->
+                    <div class="mb-6 p-4 bg-gray-800 rounded-xl border-l-4 border-yellow-500 shadow-md">
+                        <p class="text-lg font-bold text-white">Master of Computer Applications (MCA)</p>
+                        <p class="text-teal-400">Loyola Academy</p>
+                        <p class="text-gray-400 text-sm">Oct 2023 - Oct 2025 | CGPA: 8.58/10.0</p>
+                    </div>
+
+                    <!-- B.Sc -->
+                    <div class="p-4 bg-gray-800 rounded-xl border-l-4 border-yellow-500 shadow-md">
+                        <p class="text-lg font-bold text-white">Bachelor of Science (B.Sc)</p>
+                        <p class="text-teal-400">Government City College</p>
+                        <p class="text-gray-400 text-sm">Jul 2018 - Oct 2021 | CGPA: 8.15/10.0</p>
+                    </div>
+                </div>
+
+                <!-- Extra-curricular -->
+                <div>
+                    <h3 class="text-2xl font-semibold text-white mb-5 border-b border-gray-700 pb-2">Extra-curricular
+                        Activities</h3>
+
+                    <div class="space-y-4">
+                        <!-- NCC -->
+                        <div class="p-4 bg-gray-800 rounded-xl shadow-md">
+                            <p class="text-lg font-bold text-white flex items-center"><i data-lucide="shield-check"
+                                    class="w-5 h-5 mr-2 text-purple-400"></i> National Cadet Corps (NCC)</p>
+                            <p class="text-gray-300">Held the appointment of **Under Officer**, demonstrating
+                                leadership, discipline, and responsibility at the highest level.</p>
+                        </div>
+
+                        <!-- Speaking & Sports -->
+                        <div class="p-4 bg-gray-800 rounded-xl shadow-md">
+                            <p class="text-lg font-bold text-white flex items-center"><i data-lucide="mic"
+                                    class="w-5 h-5 mr-2 text-purple-400"></i> Public Speaking & Sports</p>
+                            <p class="text-gray-300">Actively participated in quizzes, debates, anchoring, and public
+                                speaking events; deeply believed in teamwork.</p>
+                        </div>
+
+                        <!-- Languages -->
+                        <div class="p-4 bg-gray-800 rounded-xl shadow-md">
+                            <p class="text-lg font-bold text-white flex items-center"><i data-lucide="languages"
+                                    class="w-5 h-5 mr-2 text-purple-400"></i> Languages Known</p>
+                            <p class="text-gray-300">English, Hindi, Telugu</p>
+                        </div>
+                        <!-- 6. NEW SECTION: PERSONAL & ADDITIONAL DETAILS -->
+                        <!-- <section id="personal-info" class="section-padding border-b border-gray-800 bg-gray-900">
+                            <h2 class="text-4xl font-bold mb-10 text-teal-400 flex items-center"><i
+                                    data-lucide="user-check" class="w-8 h-8 mr-3"></i> Personal & Additional Details
+                            </h2>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6"> -->
+
+                        <!-- Card 1: Mobile Number -->
+                        <!-- <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-teal-500 transition-all duration-300">
+                    <h3 class="text-xl font-semibold text-white mb-3 flex items-center"><i data-lucide="smartphone" class="w-5 h-5 mr-2 text-teal-400"></i> Mobile Number</h3>
+                    <p class="text-2xl text-gray-300 font-mono">+91 99897749879</p>
+                </div> -->
+
+                        <!-- Card 2: Blood Group (Placeholder) -->
+                        <!-- Card 2: Blood Group (Updated content for better visual balance) -->
+                        <!-- <div
+                                    class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-teal-500 transition-all duration-300">
+                                    <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                                        <i data-lucide="heart-pulse" class="w-5 h-5 mr-2 text-red-500"></i> Blood Group
+                                    </h3>
+                                    <p class="text-2xl text-red-400 font-bold">O+</p>
+                                </div> -->
+
+                        <!-- Card 3: Address (Updated font size for visual balance) -->
+                        <!-- <div
+                                    class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:border-teal-500 transition-all duration-300 md:col-span-1">
+                                    <h3 class="text-xl font-semibold text-white mb-3 flex items-center">
+                                        <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-yellow-400"></i> Current
+                                        Address
+                                    </h3>
+                                    <!-- Primary address text is now text-xl for visual weight -->
+                        <!-- <p class="text-xl text-gray-300 font-medium">
+                                        Hyderabad, Telangana, India.
+                                    </p>
+                                    <p class="text-xs text-gray-500 mt-2">
+                                        (Update this with your detailed street address if required.)
+                                    </p>
+                                </div> -->
+        </section>
+        </div>
+        </div>
+        </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500">
+            <p>&copy; 2025 REPAKULA THARUN. All rights reserved. | Built with HTML & Tailwind CSS.</p>
+        </div>
+    </footer>
+    <script src="main.js"></script>
+</body>
+
+</html>
